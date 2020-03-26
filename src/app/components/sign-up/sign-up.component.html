@@ -1,0 +1,40 @@
+<div class="container auth">
+  <mat-card>
+    <mat-card-title>Sign Up</mat-card-title>
+    <mat-card-subtitle>Please fill in this form to create an account!</mat-card-subtitle>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <form>
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="name">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="email">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput placeholder="password">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Confirm Password</mat-label>
+          <input matInput placeholder="confirm password">
+        </mat-form-field>
+
+        <button mat-raised-button color="accent" (click)="signUp()">Sign Up</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="auth-link">
+    <p>Already have an account?</p>
+    <a routerLink="/sign-in">Sign in here</a>
+  </div>
+</div>
+

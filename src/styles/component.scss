@@ -1,0 +1,28 @@
+.auth {
+  form {
+    margin-top: 30px;
+    min-width: 150px;
+    max-width: 400px;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .auth-link {
+    color: white;
+    display: flex;
+    margin-top: 20px;
+
+    a {
+      color: white;
+      margin-left: 10px;
+      text-decoration: underline;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}

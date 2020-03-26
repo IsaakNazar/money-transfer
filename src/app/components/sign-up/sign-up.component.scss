@@ -1,0 +1,9 @@
+@import "../../../styles/component";
+
+:host {
+  @extend .auth;
+}
+
+.container {
+  background: #F48FB1;
+}
