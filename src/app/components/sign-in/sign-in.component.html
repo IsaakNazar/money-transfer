@@ -6,15 +6,27 @@
     <mat-divider></mat-divider>
 
     <mat-card-content>
-      <form>
+      <form [formGroup]='loginForm'>
         <mat-form-field>
           <mat-label>Email</mat-label>
-          <input matInput placeholder="email">
+          <input matInput placeholder="email" formControlName="email" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="loginForm.get('email').hasError('email') && !loginForm.get('email').hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('email').hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Password</mat-label>
-          <input matInput placeholder="password">
+          <input matInput type="password" placeholder="password" formControlName="password" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="loginForm.get('password').hasError('password') && !loginForm.get('password').hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('password').hasError('required')">
+            Password is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
 
         <button mat-raised-button color="primary" (click)="signIn()">Sign In</button>

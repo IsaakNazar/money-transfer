@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-title>User Info</mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <div class="wrap">
+      <h3>Your Name:</h3>
+      <p>{{user && user.name}}</p>
+    </div>
+
+    <div class="wrap">
+      <h3>Your Balance:</h3>
+      <p>{{user && user.balance}} BTC</p>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -12,9 +12,10 @@ export class AuthGuard implements CanActivate {
     const currentUser = this.authenticationService.currentUserToken
     if (currentUser) {
       return true
+    } else {
+      this.router.navigate(['sign-in'])
+      console.log('stateurl', state)
+      return false
     }
-
-    this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}}).then(r => console.log(r))
-    return false
   }
 }

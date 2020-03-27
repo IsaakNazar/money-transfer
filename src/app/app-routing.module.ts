@@ -5,10 +5,11 @@ import { SignUpComponent } from './components/sign-up/sign-up.component'
 import { SignInComponent } from './components/sign-in/sign-in.component'
 import { NotFoundComponent } from './components/not-found/not-found.component'
 import { UserPageComponent } from './components/user-page/user-page.component'
+import { AuthGuard } from './helpers/auth.guard'
 
 
 const routes: Routes = [
-  {path: '', component: StartPageComponent},
+  {path: '', component: StartPageComponent, canActivate: [AuthGuard]},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'sign-in', component: SignInComponent},
   {path: 'user', component: UserPageComponent},

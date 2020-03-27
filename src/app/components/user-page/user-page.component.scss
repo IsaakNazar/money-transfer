@@ -1,0 +1,22 @@
+.body {
+  padding: 20px;
+  background: #C5CAE9;
+  height: 100vh;
+
+  button {
+    float: right;
+  }
+
+  .wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 30px;
+
+    transaction-history {
+      grid-column: 1 / 3;
+    }
+  }
+}
+

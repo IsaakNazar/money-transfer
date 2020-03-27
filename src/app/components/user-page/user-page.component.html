@@ -1,3 +1,8 @@
-<button (click)="getUserInfo()">User Info</button>
-<button (click)="logIn()">login</button>
-<button (click)="logOut()">logout</button>
+<div class="body">
+  <button mat-raised-button (click)="logOut()">Sign Out</button>
+  <div class="wrapper">
+    <user-info></user-info>
+    <create-transaction></create-transaction>
+    <transaction-history></transaction-history>
+  </div>
+</div>

@@ -3,13 +3,18 @@ import { BehaviorSubject, Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment'
 import { map } from 'rxjs/operators'
+import { UserService } from './user.service'
+import { User } from '../models/user'
+import { Router } from '@angular/router'
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<string>
   // public currentUser: Observable<string>
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private userService: UserService,
+              private router: Router) {
     this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('token')))
     // this.currentUser = this.currentUserSubject.asObservable()
   }
@@ -18,8 +23,8 @@ export class AuthenticationService {
     return this.currentUserSubject.getValue()
   }
 
-  login(email: string, password: string) {
-    return this.http.post<any>(`${environment.baseUrl}/sessions/create`, {email, password})
+  login(user: User.LoginModel) {
+    return this.userService.signIn({email: user.email, password: user.password})
       .pipe(
         map(token => {
           const {id_token} = token
@@ -27,10 +32,12 @@ export class AuthenticationService {
           this.currentUserSubject.next(id_token)
           return id_token
         }))
+
   }
 
   logout() {
     localStorage.removeItem('token')
     this.currentUserSubject.next(null)
+    this.router.navigate(['sign-in'])
   }
 }

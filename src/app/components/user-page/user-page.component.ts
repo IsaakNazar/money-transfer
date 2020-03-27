@@ -23,13 +23,13 @@ export class UserPageComponent implements OnInit {
       }
     )
   }
-
-  logIn() {
-    this.authenticationService.login("john@cage.good", 'johncage').subscribe(resp => {
-      console.log('login', resp)
-    })
-  }
-
+  //
+  // logIn() {
+  //   this.authenticationService.login("john@cage.good", 'johncage').subscribe(resp => {
+  //     console.log('login', resp)
+  //   })
+  // }
+  //
   logOut() {
     this.authenticationService.logout()
   }

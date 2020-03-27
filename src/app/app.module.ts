@@ -16,7 +16,14 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatDividerModule } from '@angular/material/divider'
 import { TokenInterceptor } from './helpers/token.interceptor';
-import { UserPageComponent } from './components/user-page/user-page.component'
+import { UserPageComponent } from './components/user-page/user-page.component';
+import { UserInfoComponent } from './components/user-page/user-info/user-info.component';
+import { CreateTransactionComponent } from './components/user-page/create-transaction/create-transaction.component';
+import { TransactionHistoryComponent } from './components/user-page/transaction-history/transaction-history.component'
+import { MatTableModule } from '@angular/material/table'
+import { UserService } from './services/user.service'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { ToastrModule } from 'ngx-toastr'
 
 @NgModule({
   declarations: [
@@ -25,7 +32,10 @@ import { UserPageComponent } from './components/user-page/user-page.component'
     SignInComponent,
     StartPageComponent,
     NotFoundComponent,
-    UserPageComponent
+    UserPageComponent,
+    UserInfoComponent,
+    CreateTransactionComponent,
+    TransactionHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -36,10 +46,15 @@ import { UserPageComponent } from './components/user-page/user-page.component'
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTableModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     ApiService,
+    UserService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

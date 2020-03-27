@@ -6,4 +6,5 @@ export class Paths {
   static registerUsers = base('users')
   static getUserTransactions = base('api/protected/transactions')
   static getUserInfo = base('api/protected/user-info')
+  static signIn = base('sessions/create')
 }

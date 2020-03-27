@@ -9,7 +9,6 @@ import { AuthenticationService } from './services/authentication.service'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'money-transferr'
   body = {"username":"John Cage","password":"johncage","email":"john@cage.good"}
 
 
@@ -29,7 +28,4 @@ export class AppComponent implements OnInit {
 
   }
 
-  signIn() {
-    // this.authenticationService.login("john@cage.good", 'johncage')
-  }
 }
