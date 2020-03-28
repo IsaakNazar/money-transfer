@@ -4,4 +4,8 @@ mat-form-field {
 }
 form {
   padding: 10px 0;
+
+  mat-form-field {
+    padding: 10px 0;
+  }
 }

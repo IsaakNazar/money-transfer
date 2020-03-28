@@ -1,26 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { UserService } from '../../../services/user.service'
+import { User } from '../../../models/user'
+import { BaseComponent } from '../../BaseComponent'
+import { MatTableDataSource } from '@angular/material/table'
+import { MatPaginator } from '@angular/material/paginator'
+import { MatSort } from '@angular/material/sort'
 
 @Component({
   selector: 'transaction-history',
   templateUrl: './transaction-history.component.html',
   styleUrls: ['./transaction-history.component.scss']
 })
-export class TransactionHistoryComponent implements OnInit {
+export class TransactionHistoryComponent extends BaseComponent implements OnInit {
+  data: MatTableDataSource<User.History>
+  columns = ['date', 'username', 'amount', 'balance']
 
-  data = [
-    {id: 1, date: '12/12/12', username: 'ali', amount: 15, balance: 485},
-    {id: 2, date: '12/12/12', username: 'gerb', amount: 25, balance: 455},
-    {id: 3, date: '13/10/14', username: 'mord', amount: 45, balance: 435},
-    {id: 4, date: '12/12/13', username: 'berto', amount: 63, balance: 384},
-    {id: 5, date: '2/12/15', username: 'kate', amount: 45, balance: 335},
-  ]
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator
+  @ViewChild(MatSort, {static: true}) sort: MatSort
 
-  columns = Object.keys(this.data[0])
-
-  constructor() { }
+  constructor(private userService: UserService) {
+    super()
+  }
 
   ngOnInit(): void {
-    console.log(this.columns)
+    this.loadList()
+    this.subs.add(
+      this.userService.userUpdate.asObservable().subscribe(
+        () => this.loadList()
+      )
+    )
   }
+
+
+  loadList() {
+    this.userService.getTransactionList().subscribe(
+      resp => {
+        this.data = new MatTableDataSource<User.History>(resp.trans_token)
+        this.data.paginator = this.paginator
+        this.data.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'date':
+              return new Date(item.date)
+            default:
+              return item[property]
+          }
+        }
+        this.data.sort = this.sort
+      }
+    )
+  }
+
+  getRow(row) {
+    console.log(row)
+  }
+
 
 }

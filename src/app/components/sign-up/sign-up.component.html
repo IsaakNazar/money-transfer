@@ -6,25 +6,43 @@
     <mat-divider></mat-divider>
 
     <mat-card-content>
-      <form>
+      <form [formGroup]='signUpForm'>
         <mat-form-field>
           <mat-label>Name</mat-label>
-          <input matInput placeholder="name">
+          <input matInput formControlName="username" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="signUpForm.get('username').hasError('required')">
+            Name is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Email</mat-label>
-          <input matInput placeholder="email">
+          <input matInput formControlName="email" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="signUpForm.get('email').hasError('email') && !signUpForm.get('email').hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="signUpForm.get('email').hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Password</mat-label>
-          <input matInput placeholder="password">
+          <input matInput type="password" formControlName="password" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="signUpForm.get('password').hasError('required')">
+            Password is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="signUpForm.get('password').hasError('pattern')">
+            Password must be between 4 and 8 digits long and include at least one numeric digit
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Confirm Password</mat-label>
-          <input matInput placeholder="confirm password">
+          <input matInput type="password" formControlName='confirmPassword' [errorStateMatcher]="matcher">
+          <mat-error *ngIf="signUpForm.get('confirmPassword').hasError('passwordMismatch')">
+            Password must match
+          </mat-error>
         </mat-form-field>
 
         <button mat-raised-button color="accent" (click)="signUp()">Sign Up</button>

@@ -3,15 +3,13 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Observable, of } from 'rxjs'
 import { AuthenticationService } from '../services/authentication.service'
 import { catchError } from 'rxjs/operators'
-import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
   constructor(private authenticationService: AuthenticationService,
-              private toastrService: ToastrService,
-              private router: Router) {
+              private toastrService: ToastrService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -19,7 +17,7 @@ export class TokenInterceptor implements HttpInterceptor {
     if (token) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.authenticationService.currentUserToken}`
+          Authorization: `Bearer ${token}`
         }
       })
     }
@@ -28,6 +26,7 @@ export class TokenInterceptor implements HttpInterceptor {
       catchError(
         (err, caught) => {
           if (err.status === 401) {
+            console.error(err)
             this.toastrService.error(err.error)
             this.authenticationService.logout()
             return of(err)
@@ -36,11 +35,6 @@ export class TokenInterceptor implements HttpInterceptor {
         }
       )
     )
-  }
-
-  private handleAuthError() {
-    this.authenticationService.logout()
-    // this.router.navigate(['sign-in']);
   }
 
 }

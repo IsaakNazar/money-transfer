@@ -1,3 +1,11 @@
 table {
   width: 100%;
+
+  .rows {
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(197, 202, 233, 0.2);
+    }
+  }
 }

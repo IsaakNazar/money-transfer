@@ -9,7 +9,7 @@
 
     <div class="wrap">
       <h3>Your Balance:</h3>
-      <p>{{user && user.balance}} BTC</p>
+      <p>{{(user && user.balance) || 0}} BTC</p>
     </div>
   </mat-card-content>
 </mat-card>

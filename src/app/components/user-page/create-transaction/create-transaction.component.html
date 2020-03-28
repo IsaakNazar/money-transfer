@@ -4,18 +4,32 @@
   <mat-divider></mat-divider>
 
   <mat-card-content>
-    <form>
+    <form [formGroup]="transactionForm">
       <mat-form-field>
         <mat-label>Recipient</mat-label>
-        <input matInput placeholder="recipient">
+        <input matInput formControlName="name" [errorStateMatcher]="matcher" [matAutocomplete]="auto">
+        <mat-error *ngIf="getFormControl('name').hasError('required')">
+          Name is <strong>required</strong>
+        </mat-error>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Amount</mat-label>
-        <input matInput placeholder="amount">
+        <input matInput formControlName="amount" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="getFormControl('amount').hasError('required')">
+          Amount is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="getFormControl('amount').hasError('pattern')">
+          Only numeric value
+        </mat-error>
       </mat-form-field>
 
-      <button mat-raised-button color="primary">Send</button>
+      <button mat-raised-button color="primary" (click)="send()">Send</button>
     </form>
   </mat-card-content>
 </mat-card>

@@ -24,6 +24,9 @@ import { MatTableModule } from '@angular/material/table'
 import { UserService } from './services/user.service'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ToastrModule } from 'ngx-toastr'
+import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatSortModule } from '@angular/material/sort'
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
 
 @NgModule({
   declarations: [
@@ -50,7 +53,10 @@ import { ToastrModule } from 'ngx-toastr'
     MatTableModule,
     ReactiveFormsModule,
     FormsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatPaginatorModule,
+    MatSortModule,
+    MatAutocompleteModule
   ],
   providers: [
     ApiService,

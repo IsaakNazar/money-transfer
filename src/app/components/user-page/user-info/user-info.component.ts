@@ -18,6 +18,11 @@ export class UserInfoComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUser()
+    this.subs.add(
+      this.userService.userUpdate.asObservable().subscribe(
+        () => this.loadUser()
+      )
+    )
   }
 
   loadUser() {

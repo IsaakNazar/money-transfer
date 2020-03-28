@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core'
 import { ApiService } from './services/api.service'
-import { Paths } from './misc/paths'
 import { AuthenticationService } from './services/authentication.service'
 
 @Component({

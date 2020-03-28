@@ -22,4 +22,21 @@ export namespace User {
     @Expose()
     password: string
   }
+
+  export class History {
+    @Expose()
+    id: number
+
+    @Expose()
+    username: string
+
+    @Expose()
+    date: Date
+
+    @Expose()
+    balance: number
+
+    @Expose()
+    amount: number
+  }
 }
