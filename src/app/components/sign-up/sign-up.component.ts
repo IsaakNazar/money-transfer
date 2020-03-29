@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ErrorMatcher } from '../../helpers/error-matcher'
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms'
 import { mustMatchPasswordValidator } from '../../helpers/validators'
 import { UserService } from '../../services/user.service'
 import { BaseComponent } from '../BaseComponent'
@@ -34,6 +34,10 @@ export class SignUpComponent extends BaseComponent implements OnInit {
     }, {
       validator:  mustMatchPasswordValidator('password', 'confirmPassword')
     })
+  }
+
+  getFormControl(field: string): FormControl {
+    return this.signUpForm.controls[field] as FormControl
   }
 
   signUp () {

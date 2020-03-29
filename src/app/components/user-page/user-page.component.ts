@@ -1,35 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core'
 import { ApiService } from '../../services/api.service'
-import { Paths } from '../../misc/paths'
 import { AuthenticationService } from '../../services/authentication.service'
+import { User } from '../../models/user'
 
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.scss']
 })
-export class UserPageComponent implements OnInit {
+export class UserPageComponent {
+
+  transaction: User.History
 
   constructor(private apiService: ApiService,
-              private authenticationService: AuthenticationService) { }
-
-  ngOnInit(): void {
+              private authenticationService: AuthenticationService) {
   }
 
-  getUserInfo() {
-    this.apiService.get(Paths.getUserInfo).subscribe(
-      resp => {
-        console.log('user info', resp)
-      }
-    )
+  selectRow(transaction: User.History) {
+    this.transaction = transaction
   }
-  //
-  // logIn() {
-  //   this.authenticationService.login("john@cage.good", 'johncage').subscribe(resp => {
-  //     console.log('login', resp)
-  //   })
-  // }
-  //
+
   logOut() {
     this.authenticationService.logout()
   }

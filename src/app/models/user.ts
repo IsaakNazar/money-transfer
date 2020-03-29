@@ -1,4 +1,4 @@
-import { Expose } from 'class-transformer'
+import { Expose, Type } from 'class-transformer'
 
 export namespace User {
   export class Model {
@@ -13,6 +13,10 @@ export namespace User {
 
     @Expose()
     balance: number
+
+    get labelText(): string {
+      return `${this.name} ${this.balance}`
+    }
   }
 
   export class LoginModel {
@@ -38,5 +42,23 @@ export namespace User {
 
     @Expose()
     amount: number
+  }
+
+  export class ModelToken {
+    @Expose()
+    @Type(() => Model)
+    user_info_token: Model
+  }
+
+  export class TransModel {
+    @Expose()
+    @Type(() => History)
+    trans_token: History
+  }
+
+  export class TransModelList {
+    @Expose()
+    @Type(() => History)
+    trans_token: History[]
   }
 }

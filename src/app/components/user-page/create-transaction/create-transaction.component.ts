@@ -1,20 +1,22 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core'
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms'
 import { UserService } from '../../../services/user.service'
 import { BaseComponent } from '../../BaseComponent'
 import { Observable, of } from 'rxjs'
 import { catchError, debounceTime, startWith, switchMap } from 'rxjs/operators'
 import { ErrorMatcher } from '../../../helpers/error-matcher'
 import { ToastrService } from 'ngx-toastr'
+import { User } from '../../../models/user'
 
 @Component({
   selector: 'create-transaction',
   templateUrl: './create-transaction.component.html',
   styleUrls: ['./create-transaction.component.scss']
 })
-export class CreateTransactionComponent extends BaseComponent implements OnInit {
+export class CreateTransactionComponent extends BaseComponent implements OnInit, OnChanges {
+  @Input() selectedTransaction: User.History
 
-  @Output() createTransactionEmit = new EventEmitter<boolean>()
+  @ViewChild(FormGroupDirective) formDirective: FormGroupDirective
 
   transactionForm: FormGroup
   filteredOptions: Observable<any>
@@ -26,32 +28,29 @@ export class CreateTransactionComponent extends BaseComponent implements OnInit 
     super()
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes && this.selectedTransaction) {
+      this.transactionForm.patchValue({
+        name: this.selectedTransaction.username,
+        amount: Math.abs(this.selectedTransaction.amount)
+      })
+    }
+  }
+
   ngOnInit(): void {
     this.transactionForm = this.formBuilder.group({
       name: [null, [Validators.required]],
       amount: [null, [Validators.required, Validators.pattern(/^[0-9]+$/)]]
     })
 
-    this.loadUsers()
-
-    this.filteredOptions = this.transactionForm.get('name').valueChanges
+    this.filteredOptions = this.transactionForm.controls['name'].valueChanges
       .pipe(
         startWith(''),
         debounceTime(300),
         switchMap(value => {
-          return (value !== '') ? this.lookup(value) : of(null)
+          return (value && value.length) ? this.lookup(value) : of(null)
         })
       )
-  }
-
-  loadUsers() {
-    this.subs.add(
-      this.userService.getTransactionList().subscribe(
-        resp => {
-          console.log('==>', resp)
-        }
-      )
-    )
   }
 
   send() {
@@ -61,8 +60,10 @@ export class CreateTransactionComponent extends BaseComponent implements OnInit 
 
     this.subs.add(
       this.userService.createTransaction(this.transactionForm.value).subscribe(
-        resp => {
+        (resp: User.TransModel) => {
           this.userService.userUpdate.next(resp)
+          this.formDirective.resetForm()
+          this.toastrService.success('Transaction has been successfully sent!')
         },
         error => {
           this.toastrService.error(error)

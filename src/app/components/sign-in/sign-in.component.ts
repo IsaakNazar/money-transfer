@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { AuthenticationService } from '../../services/authentication.service'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ErrorMatcher } from '../../helpers/error-matcher'
 import { BaseComponent } from '../BaseComponent'
 import { Router } from '@angular/router'
@@ -27,20 +27,18 @@ export class SignInComponent extends BaseComponent implements OnInit {
     })
   }
 
+  getFormControl(field: string): FormControl {
+    return this.loginForm.controls[field] as FormControl
+  }
+
   signIn() {
     if (this.loginForm.invalid) {
       return
     }
 
     this.authenticationService.login(this.loginForm.value).subscribe(
-      resp => {
-        console.log(resp)
-        this.router.navigate(['user'])
-      }
+      () => this.router.navigate(['user'])
     )
-
-
-    console.log(this.loginForm)
   }
 
 }

@@ -2,7 +2,7 @@
   <button mat-raised-button (click)="logOut()">Sign Out</button>
   <div class="wrapper">
     <user-info></user-info>
-    <create-transaction></create-transaction>
-    <transaction-history></transaction-history>
+    <create-transaction [selectedTransaction]="transaction"></create-transaction>
+    <transaction-history (emitSelectedRow)="selectRow($event)"></transaction-history>
   </div>
 </div>

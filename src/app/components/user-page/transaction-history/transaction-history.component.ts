@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core'
 import { UserService } from '../../../services/user.service'
 import { User } from '../../../models/user'
 import { BaseComponent } from '../../BaseComponent'
@@ -14,6 +14,8 @@ import { MatSort } from '@angular/material/sort'
 export class TransactionHistoryComponent extends BaseComponent implements OnInit {
   data: MatTableDataSource<User.History>
   columns = ['date', 'username', 'amount', 'balance']
+
+  @Output() emitSelectedRow = new EventEmitter<User.History>()
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator
   @ViewChild(MatSort, {static: true}) sort: MatSort
@@ -34,10 +36,10 @@ export class TransactionHistoryComponent extends BaseComponent implements OnInit
 
   loadList() {
     this.userService.getTransactionList().subscribe(
-      resp => {
+      (resp: User.TransModelList) => {
         this.data = new MatTableDataSource<User.History>(resp.trans_token)
         this.data.paginator = this.paginator
-        this.data.sortingDataAccessor = (item, property) => {
+        this.data.sortingDataAccessor = (item: User.History, property: string) => {
           switch (property) {
             case 'date':
               return new Date(item.date)
@@ -50,8 +52,8 @@ export class TransactionHistoryComponent extends BaseComponent implements OnInit
     )
   }
 
-  getRow(row) {
-    console.log(row)
+  getRow(row: User.History) {
+    this.emitSelectedRow.emit(row)
   }
 
 

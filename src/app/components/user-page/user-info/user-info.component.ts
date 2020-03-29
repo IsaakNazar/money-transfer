@@ -28,7 +28,7 @@ export class UserInfoComponent extends BaseComponent implements OnInit {
   loadUser() {
     this.subs.add(
       this.userService.getUserInfo().subscribe(
-        resp => {
+        (resp: User.ModelToken) => {
           this.user = resp.user_info_token
         }
       )

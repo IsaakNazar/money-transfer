@@ -4,7 +4,7 @@ import { Paths } from '../misc/paths'
 import { Observable, Subject } from 'rxjs'
 import { User } from '../models/user'
 import { map } from 'rxjs/operators'
-import { deserialize, plainToClass } from 'class-transformer'
+import { plainToClass } from 'class-transformer'
 
 @Injectable()
 export class UserService {
@@ -14,8 +14,10 @@ export class UserService {
   constructor(private apiService: ApiService) {
   }
 
-  getUserInfo(): Observable<any> {
-    return this.apiService.get(Paths.getUserInfo)
+  getUserInfo(): Observable<User.ModelToken> {
+    return this.apiService.get<User.ModelToken>(Paths.getUserInfo).pipe(
+      map(data => plainToClass(User.ModelToken, data))
+    )
   }
 
   signIn(body: any): Observable<any> {
@@ -26,12 +28,16 @@ export class UserService {
     return this.apiService.post(Paths.registerUser, body)
   }
 
-  createTransaction(body: any): Observable<any> {
-    return this.apiService.post(Paths.createGetTransactions, body)
+  createTransaction(body: any): Observable<User.TransModel> {
+    return this.apiService.post<User.TransModel>(Paths.createGetTransactions, body).pipe(
+      map(data => plainToClass(User.TransModel, data))
+    )
   }
 
-  getTransactionList(): Observable<any> {
-    return this.apiService.get(Paths.createGetTransactions)
+  getTransactionList(): Observable<User.TransModelList> {
+    return this.apiService.get<User.TransModelList>(Paths.createGetTransactions).pipe(
+      map(data => plainToClass(User.TransModelList, data))
+    )
   }
 
   filterList(body: any): Observable<any> {
