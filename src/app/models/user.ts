@@ -13,10 +13,6 @@ export namespace User {
 
     @Expose()
     balance: number
-
-    get labelText(): string {
-      return `${this.name} ${this.balance}`
-    }
   }
 
   export class LoginModel {

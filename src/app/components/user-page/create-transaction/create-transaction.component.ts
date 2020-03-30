@@ -7,6 +7,7 @@ import { catchError, debounceTime, startWith, switchMap } from 'rxjs/operators'
 import { ErrorMatcher } from '../../../helpers/error-matcher'
 import { ToastrService } from 'ngx-toastr'
 import { User } from '../../../models/user'
+import { numericPattern } from '../../../helpers/validators'
 
 @Component({
   selector: 'create-transaction',
@@ -40,7 +41,7 @@ export class CreateTransactionComponent extends BaseComponent implements OnInit,
   ngOnInit(): void {
     this.transactionForm = this.formBuilder.group({
       name: [null, [Validators.required]],
-      amount: [null, [Validators.required, Validators.pattern(/^[0-9]+$/)]]
+      amount: [null, [Validators.required, Validators.pattern(numericPattern)]]
     })
 
     this.filteredOptions = this.transactionForm.controls['name'].valueChanges

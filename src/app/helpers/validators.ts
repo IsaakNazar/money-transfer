@@ -16,3 +16,7 @@ export const mustMatchPasswordValidator = (controlName: string, matchingControlN
     }
   }
 }
+
+// regular expression patterns
+export const passwordPattern = /^(?=.*\d).{4,8}$/
+export const numericPattern = /^[0-9]+$/

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ErrorMatcher } from '../../helpers/error-matcher'
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms'
-import { mustMatchPasswordValidator } from '../../helpers/validators'
+import { mustMatchPasswordValidator, passwordPattern } from '../../helpers/validators'
 import { UserService } from '../../services/user.service'
 import { BaseComponent } from '../BaseComponent'
 import { ToastrService } from 'ngx-toastr'
@@ -29,7 +29,7 @@ export class SignUpComponent extends BaseComponent implements OnInit {
     this.signUpForm = this.formBuilder.group({
       username: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required, Validators.pattern(/^(?=.*\d).{4,8}$/)]],
+      password: [null, [Validators.required, Validators.pattern(passwordPattern)]],
       confirmPassword: [null, Validators.required]
     }, {
       validator:  mustMatchPasswordValidator('password', 'confirmPassword')
