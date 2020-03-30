@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ErrorMatcher } from '../../helpers/error-matcher'
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms'
-import { mustMatchPasswordValidator, passwordPattern } from '../../helpers/validators'
+import { mustMatchPasswordValidator, passwordPattern } from '../../misc/validators'
 import { UserService } from '../../services/user.service'
 import { BaseComponent } from '../BaseComponent'
 import { ToastrService } from 'ngx-toastr'
