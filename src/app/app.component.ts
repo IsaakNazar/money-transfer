@@ -9,5 +9,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     console.log('test')
     console.warn('warn message')
+    console.warn('warn message 2')
   }
 }
