@@ -8,5 +8,6 @@ import { Component, OnInit } from '@angular/core'
 export class AppComponent implements OnInit {
   ngOnInit(): void {
     console.log('test')
+    console.warn('warn message')
   }
 }
